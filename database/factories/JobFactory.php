@@ -17,12 +17,14 @@ class JobFactory extends Factory
      */
     public function definition(): array
     {
+        $company = Company::all()->random();
+
         return [
-            'company_id' => rand(1, Company::all()->count()),
+            'company_id' => $company->id,
             'title' => fake()->sentence(),
-            'location' => fake()->city(),
-            'email' => fake()->companyEmail(),
-            'website'=> fake()->url(),
+            'location' => $company->location,
+            'email' => $company->email,
+            'website'=> $company->website,
             'description' => fake()->paragraph(5),
         ];
     }
