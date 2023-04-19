@@ -32,7 +32,7 @@ class User extends Authenticatable
     {
         return [
             'first_name' => 'required',
-            'last_name' => 'required|max:255',
+            'last_name' => 'required',
             'location' => 'required',
             'email' => 'required|email',
             'password' => 'required',
@@ -67,6 +67,6 @@ class User extends Authenticatable
     // Relationship to Image
     public function images(): MorphMany
     {
-        return $this->morphMany(Tag::class, 'imageable');
+        return $this->morphMany(Image::class, 'imageable');
     }
 }
