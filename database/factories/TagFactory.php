@@ -16,8 +16,19 @@ class TagFactory extends Factory
      */
     public function definition(): array
     {
+        $taglist = [
+            'Frontend',
+            'Backend',
+            'Full-Stack',
+            'Laravel',
+            'React',
+            'Java',
+            'C#',
+            'Designer',
+        ];
+
         return [
-            'tag_name' => fake()->word(),
+            'tag_name' => array_rand($taglist),
         ];
     }
 }
