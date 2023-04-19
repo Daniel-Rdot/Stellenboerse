@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class User extends Authenticatable
 {
@@ -18,10 +20,24 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'location',
         'email',
         'password',
     ];
+
+
+    public function validationRules(): array
+    {
+        return [
+            'first_name' => 'required',
+            'last_name' => 'required|max:255',
+            'location' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+        ];
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,4 +57,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Relationship to Company
+    public function company(): hasOne
+    {
+        return $this->hasOne(Company::class);
+    }
+
+    // Relationship to Image
+    public function images(): MorphMany
+    {
+        return $this->morphMany(Tag::class, 'imageable');
+    }
 }
