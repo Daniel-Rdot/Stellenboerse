@@ -17,7 +17,9 @@ class ImageFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'path' => fake()->image(),
+            'imageable_id' => 1, // Placeholder
+            'imageable_type' => 'user', // Placeholder
         ];
     }
 }
