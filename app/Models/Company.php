@@ -13,20 +13,30 @@ class Company extends Model
 
     protected $fillable = [
         'user_id',
+
         'name',
+
         'email',
-        'location',
         'website',
+
+        'street',
+        'postcode',
+        'city',
     ];
 
     public static function validationRules(): array
     {
         return [
             'user_id' => 'required',
+
             'name' => 'required',
-            'email' => 'required|email',
-            'location' => 'required',
-            'website' => 'required',
+
+            'email' => 'nullable|email',
+            'website' => 'nullable',
+            
+            'street' => 'nullable',
+            'postcode' => 'nullable',
+            'city' => 'nullable',
         ];
     }
 
