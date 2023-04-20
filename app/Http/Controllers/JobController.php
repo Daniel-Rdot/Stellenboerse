@@ -74,7 +74,7 @@ class JobController extends Controller
         // Update database entry
         $job->update($formFields);
 
-        return redirect('jobs.show', ['job' => $job]);
+        return redirect('jobs.show', ['job' => $job])->with('message', 'Änderungen erfolgreich');
     }
 
     /**

@@ -19,7 +19,7 @@ class Company extends Model
         'website',
     ];
 
-    public function validationRules(): array
+    public static function validationRules(): array
     {
         return [
             'user_id' => 'required',
