@@ -21,7 +21,7 @@ class Job extends Model
         'description'
     ];
 
-    public function validationRules(): array
+    public static function validationRules(): array
     {
         return [
             'company_id' => 'required',
