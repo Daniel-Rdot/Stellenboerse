@@ -35,13 +35,14 @@ class JobController extends Controller
         // Validation
         $formFields = $request->validate(Job::validationRules());
 
-        // Have to set Job->company_id = Company->id where Company->user_id = User->id of authenticated user
+        // ??? Have to set Job->company_id = Company->id where Company->user_id = User->id of authenticated user
         $formFields['company_id'] = auth()->user()->company->id;
 
         // Persist new Model to Database
         Job::create($formFields);
 
-        return redirect('/')->with('message', 'Anzeige erstellt');
+        // ??? Zusätzliche Methode / View nötig, oder? Übersicht für alle Anzeigen DIESES users, nicht für ALLE Anzeigen
+        return redirect('jobs.???')->with('message', 'Anzeige erstellt');
     }
 
     /**

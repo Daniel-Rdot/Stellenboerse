@@ -28,14 +28,14 @@ class User extends Authenticatable
     ];
 
 
-    public function validationRules(): array
+    public static function validationRules(): array
     {
         return [
             'first_name' => 'required',
             'last_name' => 'required',
             'location' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed|min:8',
         ];
     }
 
