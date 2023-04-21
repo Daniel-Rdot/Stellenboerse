@@ -4,27 +4,38 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+
 
 class Tag extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-      'tag_name',
+        'tag',
     ];
 
-    public function validationRules(): array
+    public static function validationRules(): array
     {
         return [
-            'tag_name' => 'required',
+            'tag' => 'required',
         ];
     }
 
 
-    // Relationship to Job
-    public function jobs(): BelongsToMany
+    public function jobs(): MorphToMany
     {
-        return $this->belongsToMany(Job::class);
+        return $this->morphedByMany(Job::class, 'taggable');
     }
+
+    public function users(): MorphToMany
+    {
+        return $this->morphedByMany(User::class, 'taggable');
+    }
+
+    public function companies(): MorphToMany
+    {
+        return $this->morphedByMany(Company::class, 'taggable');
+    }
+
 }

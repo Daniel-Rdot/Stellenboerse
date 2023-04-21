@@ -28,7 +28,7 @@ class TagFactory extends Factory
         ];
 
         return [
-            'tag_name' => array_rand($taglist),
+            'tag' => array_rand($taglist),
         ];
     }
 }
