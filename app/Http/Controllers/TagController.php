@@ -32,9 +32,9 @@ class TagController extends Controller
     {
         $data = $request->validate(Tag::validationRules());
 
-        $tag = Tag::create($data);
+        Tag::create($data);
 
-        return redirect('companies.show', ['company' => $tag])->with('message', 'Tag created');
+        return redirect('tags.show')->with('message', 'Tag created');
     }
 
     /**
@@ -56,13 +56,13 @@ class TagController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, Tag $tag): View
     {
         $data = $request->validate(Tag::validationRules());
 
         $tag->update($data);
 
-        return redirect('companies.show', ['company' => $tag])->with('message', 'Tag created');
+        return view('tags.show', ['tag' => $tag])->with('message', 'Tag updated');
     }
 
     /**
