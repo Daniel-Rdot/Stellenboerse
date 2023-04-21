@@ -1,0 +1,47 @@
+GET http://localhost:80/
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+Authorization:
+
+###
+
+GET {{host}}/api/v1/tags/89
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+Authorization: Bearer
+
+###
+
+POST http://localhost/api/tags/
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+
+{
+    "tag": "bacgghtrhhd"
+}
+
+###
+
+PUT http://localhost/api/tags/3
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+
+{
+    "tag": "horst"
+}
+
+###
+
+DELETE http://localhost/api/tags/3
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+
+###

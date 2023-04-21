@@ -28,13 +28,13 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): View
     {
         $data = $request->validate(Tag::validationRules());
 
-        Tag::create($data);
+        $tag = Tag::create($data);
 
-        return redirect('tags.show')->with('message', 'Tag created');
+        return view('tags.show', ['tag' => $tag])->with('message', 'Tag created');
     }
 
     /**
