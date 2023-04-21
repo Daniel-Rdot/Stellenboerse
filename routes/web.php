@@ -17,4 +17,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('tags', \App\Http\Controllers\TagController::class);
+Route::resource('users', \App\Http\Controllers\UserController::class)
+    ->only(['create', 'edit',]);
+
+Route::resource('companies', \App\Http\Controllers\CompanyController::class)
+    ->only(['create', 'edit',]);
+
+Route::resource('jobs', \App\Http\Controllers\JobController::class)
+    ->only(['create', 'edit',]);
+
+Route::resource('images', \App\Http\Controllers\ImageController::class)
+    ->only(['create', 'edit',]);
+
+Route::resource('tags', \App\Http\Controllers\TagController::class)
+    ->only(['create', 'edit',]);
