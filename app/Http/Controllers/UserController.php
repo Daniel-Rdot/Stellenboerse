@@ -3,18 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class UserController extends Controller
 {
+    protected UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        return view('users.index');
+        $data = $request->validate(['first_name' => 'string']);
+
+        $users = User::query()
+            ->when(isset($data['first_name']), function ($query) use ($data) {
+                $query->where('first_name', 'LIKE', '%' . $data['first_name'] . '%');
+            })
+            ->paginate();
+
+        return view('users.index', ['users' => $users]);
     }
 
     /**
@@ -22,28 +38,20 @@ class UserController extends Controller
      */
     public function create(): View
     {
-        return view('users.create');
+        return view('users.create', ['user' => new User()]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): View
     {
-        // Validation
-        $formFields = $request->validate(User::validationRules());
+        $data = $request->validate(User::validationRules());
 
-        // Hash Password
-        $formFields['password'] = bcrypt($formFields['password']);
-
-        // Store new user in database
-        $user = User::create($formFields);
-
-        // Login
-        auth()->login($user);
+        $user = $this->userRepository->updateOrCreate($data, $request);
 
         // ??? Hier käme Email Verification?
-        return redirect('/')->with('message', 'Account erfolgreich angelegt');
+        return view('users.show', ['user' => $user->load('images')])->with('message', trans('app.successfully_created'));
     }
 
     /**
@@ -51,7 +59,7 @@ class UserController extends Controller
      */
     public function show(User $user): View
     {
-        return view('users.show', ['user' => $user]);
+        return view('users.show', ['user' => $user->load('images')]);
     }
 
     /**
@@ -67,18 +75,11 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user): RedirectResponse
     {
-        //  ??? Autorisierung des authentifizierten Users zur Bearbeitung von $user erfolgt über Policy nehm ich an
+        $data = $request->validate(User::validationRules());
 
-        // Validation
-        $formFields = $request->validate(User::validationRules());
+        $this->userRepository->updateOrCreate($data, $request, $user);
 
-        // Hash Password
-        $formFields['password'] = bcrypt($formFields['password']);
-
-        // Update database entry
-        $user->update($formFields);
-
-        return redirect('users.show', ['user' => $user])->with('message', 'Änderungen erfolgreich');
+        return redirect('users.show', ['user' => $user])->with('message', trans('app.successfully_updated'));
     }
 
     /**
@@ -86,12 +87,9 @@ class UserController extends Controller
      */
     public function destroy(User $user): RedirectResponse
     {
-        //  ??? Autorisierung des authentifizierten Users zur Bearbeitung von $user erfolgt über Policy nehm ich an
-
-        // Remove from storage
         $user->delete();
 
-        return redirect('/')->with('message', 'Account gelöscht');
+        return redirect('/')->with('message', trans('app.successfully_deleted'));
     }
 
     // ??? Authentication / Login / Logout methods hier?
