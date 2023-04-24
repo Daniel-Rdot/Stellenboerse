@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -22,7 +23,7 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name',
-        'location',
+        'city',
         'email',
         'password',
     ];
@@ -33,9 +34,11 @@ class User extends Authenticatable
         return [
             'first_name' => 'required',
             'last_name' => 'required',
-            'location' => 'required',
+            'city' => 'nullable',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed|min:8',
+            'images' => 'nullable',
+            'images.*' => 'image',
         ];
     }
 
@@ -58,15 +61,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Relationship to Company
+
     public function company(): hasOne
     {
         return $this->hasOne(Company::class);
     }
 
-    // Relationship to Image
     public function images(): MorphMany
     {
         return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
     }
 }
