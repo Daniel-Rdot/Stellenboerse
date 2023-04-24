@@ -1,0 +1,56 @@
+GET {{host}}/api/users/
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+Authorization:
+
+###
+
+GET {{host}}/api/users/89
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+Authorization: Bearer
+
+###
+
+POST http://localhost/api/users/
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+
+{
+    "first_name": "abc",
+    "last_name": "def",
+    "location": "berlin",
+    "email": "abc@def.de",
+    "password": "123456578",
+    "email_verified_at": "2023-04-21 13:38:30",
+    "remember_token": "abcdefghij"
+}
+
+###
+
+PUT http://localhost/api/users/1
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+
+{
+    "first_name": "horst",
+    "last_name": "brot",
+    "email": "horst@brot.com",
+    "password": "34985jk5kj4"
+}
+
+###
+
+DELETE http://localhost/api/users/12
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+
+###
