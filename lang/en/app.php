@@ -21,4 +21,5 @@ return [
     'password' => 'Password',
     'password_confirmation' => 'Confirm your password',
     'profile_picture' => 'Profile picture',
+    'login_successful' => 'You are now logged in',
 ];

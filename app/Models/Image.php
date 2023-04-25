@@ -12,14 +12,16 @@ class Image extends Model
 
     protected $fillable = [
         'path',
+
         'imageable_id',
         'imageable_type',
     ];
 
-    public function validationRules(): array
+    public static function validationRules(): array
     {
         return [
             'path' => 'required',
+
             'imageable_id' => 'required',
             'imageable_type' => 'required',
         ];

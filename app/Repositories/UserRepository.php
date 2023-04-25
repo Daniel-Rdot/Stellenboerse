@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 
 class UserRepository
@@ -21,7 +22,7 @@ class UserRepository
         if ($request->hasFile('images')) {
             foreach ($request->file('images') ?? [] as $image) {
                 $user->images()->create([
-                    'path' => $image->store('public/images')
+                    'path' => Str::after($image->store('public/images'), 'public/')
                 ]);
             }
         }
