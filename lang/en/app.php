@@ -22,4 +22,9 @@ return [
     'password_confirmation' => 'Confirm your password',
     'profile_picture' => 'Profile picture',
     'login_successful' => 'You are now logged in',
+    'wrong_credentials' => 'The provided credentials do not match our records',
+    'welcome' => 'Welcome',
+    'acc_settings' => 'Account Settings',
+    'logout' => 'Log off',
+    'manage_listings' => 'Manage Listings',
 ];

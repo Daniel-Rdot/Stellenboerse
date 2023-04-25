@@ -25,3 +25,7 @@ Route::resources([
     'images' => \App\Http\Controllers\ImageController::class,
     'tags' => \App\Http\Controllers\TagController::class,
 ]);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
