@@ -5,7 +5,9 @@
         <a href="/listings/create"
            class="absolute top-1/4 right-10 bg-black text-white py-2 px-5">{{ trans('app.new_job') }}</a>
     @else
-        <a href="/users/create"
+        <a href="{{ route('login') }}"
            class="absolute top-1/4 right-10 bg-black text-white py-2 px-5">{{ trans('app.login') }}</a>
+        <a href="{{ route('register') }}"
+           class="absolute top-1/4 left-10 bg-black text-white py-2 px-5">{{ trans('app.register') }}</a>
     @endauth
 </footer>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="icon" href="{{ asset('images/favicon.ico') }}"/>
+    <link rel="icon" href="{{ asset('storage/images/favicon.ico') }}"/>
 
     <link
         rel="stylesheet"
@@ -34,8 +34,8 @@
 <body class="mb-48">
 @include('elements.header')
 
-@section('content')
-@endsection
+@yield('content')
+
 @include('elements.footer')
 </body>
 </html>

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -29,17 +31,30 @@ class User extends Authenticatable
     ];
 
 
-    public static function validationRules(): array
+    public static function validationRules(User $user = null): array
     {
-        return [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'city' => 'nullable',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:8',
-            'images' => 'nullable',
-            'images.*' => 'image',
-        ];
+        if (!isset($user)) {
+            return [
+                'first_name' => 'nullable',
+                'last_name' => 'nullable',
+                'city' => 'nullable',
+                'email' => 'required|email|unique:users',
+                'password' => 'sometimes|confirmed|min:8',
+                'images' => 'nullable',
+                'images.*' => 'image',
+            ];
+        } else {
+            return [
+                'first_name' => 'nullable',
+                'last_name' => 'nullable',
+                'city' => 'nullable',
+                'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
+                'old_password' => 'nullable',
+                'password' => 'nullable|confirmed|min:8',
+                'images' => 'nullable',
+                'images.*' => 'image',
+            ];
+        }
     }
 
     /**

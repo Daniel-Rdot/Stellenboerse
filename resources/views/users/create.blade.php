@@ -1,6 +1,7 @@
 @include('app')
 
 <x-back/>
+
 <div class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
     <header class="text-center">
         <h2 class="text-2xl font-bold uppercase mb-1">
@@ -22,7 +23,7 @@
             <input
                 type="text"
                 class="border border-gray-200 rounded p-2 w-full"
-                name="first_name"
+                name="first_name" id="first_name"
                 value="{{ old('first_name') }}"
             />
             @error('first_name')
@@ -37,7 +38,7 @@
             <input
                 type="text"
                 class="border border-gray-200 rounded p-2 w-full"
-                name="last_name"
+                name="last_name" id="last_name"
                 value="{{ old('last_name') }}"
             />
             @error('last_name')
@@ -52,7 +53,7 @@
             <input
                 type="text"
                 class="border border-gray-200 rounded p-2 w-full"
-                name="city"
+                name="city" id="city"
                 value="{{ old('city') }}"
             />
             @error('city')
@@ -67,7 +68,7 @@
             <input
                 type="text"
                 class="border border-gray-200 rounded p-2 w-full"
-                name="email"
+                name="email" id="email"
                 value="{{ old('email') }}"
             />
             @error('email')
@@ -78,11 +79,11 @@
         <div class="mb-6">
             <label for="images" class="inline-block text-lg mb-2">{{ trans('app.profile_picture') }}</label>
             <img class="w-48 mr-6 mb-6" id="image-preview"
-                 src="{{asset('/images/no-image.png')}}"
+                 src="{{asset('storage/images/no-image.png')}}"
                  alt=""
             />
             <input type="file" class="border border-gray-200 rounded p-2 w-full" accept="image/*" name="images[]"
-                   onchange="updatePreview(this, 'image-preview')"/>
+                   onchange="updatePreview(this, 'image-preview')" id="images"/>
             @error('images')
             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
             @enderror
@@ -95,7 +96,7 @@
             <input
                 type="password"
                 class="border border-gray-200 rounded p-2 w-full"
-                name="password"
+                name="password" id="password"
             />
             @error('password')
             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -109,7 +110,7 @@
             <input
                 type="password"
                 class="border border-gray-200 rounded p-2 w-full"
-                name="password_confirmation"
+                name="password_confirmation" id="password_confirmation"
             />
             @error('password_confirmation')
             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
