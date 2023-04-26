@@ -73,13 +73,13 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user): RedirectResponse
+    public function update(Request $request, User $user): View
     {
-        $data = $request->validate(User::validationRules());
+        $data = $request->validate(User::validationRules($user));
 
         $this->userRepository->updateOrCreate($data, $request, $user);
 
-        return redirect('users.show', ['user' => $user])->with('message', trans('app.successfully_updated'));
+        return view('users.show', ['user' => $user])->with('message', trans('app.successfully_updated'));
     }
 
     /**
@@ -89,7 +89,7 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect('/')->with('message', trans('app.successfully_deleted'));
+        return redirect('/home')->with('message', trans('app.successfully_deleted'));
     }
 
     // ??? Authentication / Login / Logout methods hier?
