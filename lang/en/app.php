@@ -33,7 +33,9 @@ return [
     'manage_listings' => 'Manage Listings',
     'forgot_password' => 'Forgot Your Password?',
     'change_password' => 'Change your Password',
-    'old_password' => 'Old Password',
+    'current_password' => 'Current Password',
+    'current_password_no_match' => 'The password you entered does not match your current password.',
     'new_password' => 'New Password',
     'delete_account' => 'Delete account',
+    'remember_me' => 'Remember me',
 ];

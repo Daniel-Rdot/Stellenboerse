@@ -16,7 +16,7 @@
 
                 <div class="mb-6">
                     <label for="email"
-                           class="inline-block text-lg mb-2">{{ __('Email Address') }}</label>
+                           class="inline-block text-lg mb-2">{{ trans('app.email_address') }}</label>
 
                     <div class="col-md-6">
                         <input id="email" type="email"
@@ -40,7 +40,7 @@
                         <input id="password" type="password"
                                class="border border-gray-200 rounded p-2 w-full form-control @error('password') is-invalid @enderror"
                                name="password"
-                               required autocomplete="current-password">
+                               required>
 
                         @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -57,7 +57,7 @@
                                    id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                             <label class="form-check-label" for="remember">
-                                {{ __('Remember Me') }}
+                                {{ trans('app.remember_me') }}
                             </label>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
 
                 <div class="mb-6">
                     <button type="submit" class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
-                        {{ trans('app.sign_up') }}
+                        {{ trans('app.login') }}
                     </button>
                 </div>
 
