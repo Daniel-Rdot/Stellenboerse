@@ -89,45 +89,10 @@
         </div>
 
         <div class="mb-6">
-            <label for="old_password" class="inline-block text-lg mb-2">
-                {{ trans('app.old_password') }}
-            </label>
-            <input
-                type="password"
-                class="border border-gray-200 rounded p-2 w-full"
-                name="old_password" id="old_password"
-            />
-            @error('password')
-            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-            @enderror
-        </div>
-
-        <div class="mb-6">
-            <label for="password" class="inline-block text-lg mb-2">
-                {{ trans('app.new_password') }}
-            </label>
-            <input
-                type="password"
-                class="border border-gray-200 rounded p-2 w-full"
-                name="password" id="password"
-            />
-            @error('password')
-            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-            @enderror
-        </div>
-
-        <div class="mb-6">
-            <label for="password_confirmation" class="inline-block text-lg mb-2">
-                {{ trans('app.password_confirmation') }}
-            </label>
-            <input
-                type="password"
-                class="border border-gray-200 rounded p-2 w-full"
-                name="password_confirmation" id="password_confirmation"
-            />
-            @error('password_confirmation')
-            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-            @enderror
+            <i class="fa-solid fa-key"></i>
+            <a class="text-black-500" href="{{ route('passwords.change') }}">
+                {{ trans('app.change_password') }}
+            </a>
         </div>
 
         <div class="mb-6">
