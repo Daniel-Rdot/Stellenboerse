@@ -1,11 +1,3 @@
-<?php
-
-use \App\Models\User;
-use Illuminate\Support\Facades\Storage;
-
-?>
-
-
 @include('app')
 
 <x-back/>
@@ -13,7 +5,7 @@ use Illuminate\Support\Facades\Storage;
 <div class="mx-4">
     <div class="flex flex-col items-center justify-center text-center">
         <img class="w-48 mr-6 mb-6"
-             src="{{ $user->images()->first() ? asset('storage/' . $user->images()->first()->path) : asset('storage/images/no-image.png') }}"
+             src="{{ $user->images()->exists() ? asset('storage/' . $user->images()->first()->path) : asset('storage/images/no-image.png') }}"
              alt=""
         />
 
