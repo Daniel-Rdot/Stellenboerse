@@ -5,18 +5,28 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
+use App\Repositories\CompanyRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CompanyController extends Controller
 {
+    protected CompanyRepository $companyRepository;
+
+    public function __construct(CompanyRepository $companyRepository)
+    {
+        $this->companyRepository = $companyRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        return view('companies.index');
+        $companies = Company::query()
+            ->paginate();
+        return view('companies.index', ['companies' => $companies]);
     }
 
     /**
@@ -24,7 +34,7 @@ class CompanyController extends Controller
      */
     public function create(): View
     {
-        return view('companies.create');
+        return view('companies.create', ['company' => auth()->user()->company]);
     }
 
     /**
@@ -32,16 +42,11 @@ class CompanyController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // Validate
-        $formFields = $request->validate(Company::validationRules());
+        $data = $request->validate(Company::validationRules());
 
-        // Neu erstellte Company mit authentifizierten User verbinden
-        $formFields['user_id'] = auth()->id();
+        $company = $this->companyRepository->updateOrCreate($data, $request);
 
-        // Neue Company in Datenbank speichern
-        $company = Company::create($formFields);
-
-        return redirect('companies.show', ['company' => $company])->with('message', 'Unternehmen erstellt');
+        return redirect(route('companies.show', ['company' => $company->load(['images', 'user'])]))->with('message', trans('app.successfully_created'));
     }
 
     /**
@@ -65,15 +70,11 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company): RedirectResponse
     {
-        //  ??? Autorisierung des authentifizierten Users zur Bearbeitung der Company erfolgt über Policy nehm ich an
+        $data = $request->validate(Company::validationRules());
 
-        // Validation
-        $formFields = $request->validate(Company::validationRules());
+        $this->companyRepository->updateOrCreate($data, $request, $company);
 
-        // Datenbankeintrag updaten
-        $company->update($formFields);
-
-        return redirect('companies.show', ['company' => $company])->with('message', 'Änderungen erfolgreich');
+        return redirect(route('companies.show', ['company' => $company->load(['images', 'user'])]))->with('message', trans('app.succesfully_updated'));
     }
 
     /**
@@ -81,11 +82,8 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company): RedirectResponse
     {
-        //  ??? Autorisierung des authentifizierten Users zur Bearbeitung der Company erfolgt über Policy nehm ich an
-
-        // Datenbankeintrag löschen
         $company->delete();
 
-        return redirect('/')->with('message', 'Unternehmen gelöscht');
+        return redirect(route('users.edit', ['user' => auth()->user()]))->with('message', trans('app.successfully_deleted'));
     }
 }
