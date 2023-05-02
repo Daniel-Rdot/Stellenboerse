@@ -23,13 +23,20 @@ class JobController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Company $company = null): View
+    public function index(Request $request): View
     {
-        if (isset($company)) {
-            $jobs = $company->jobs();
-        } else {
-            $jobs = Job::query()->paginate();
-        }
+        $data = $request->query();
+
+        $jobs = Job::query()
+            ->where('company_id', auth()->user()->company->id)
+            ->paginate(20);
+
+        // Code für Suchfeld
+//        $jobs = Job::query()
+//            ->when(isset($data['company_id']), function ($query) use ($data) {
+//                $query->where('company_id', 'LIKE', '%' . $data['company_id'] . '%');
+//            })
+//            ->paginate();
 
         return view('jobs.index', ['jobs' => $jobs]);
     }
@@ -49,9 +56,9 @@ class JobController extends Controller
     {
         $data = $request->validate(Job::validationRules());
 
-        $job = $this->jobRepository->updateOrCreate($data, $request);
+        $job = $this->jobRepository->updateOrCreate($data);
 
-        return redirect(route('jobs.show', ['job' => $job->load(['company.user', 'images'])]))->with('message', trans('app.successfully_created'));
+        return redirect(route('jobs.show', ['job' => $job]))->with('message', trans('app.successfully_created'));
     }
 
     /**
@@ -77,7 +84,7 @@ class JobController extends Controller
     {
         $data = $request->validate(Job::validationRules());
 
-        $this->jobRepository->updateOrCreate($data, $request, $job);
+        $this->jobRepository->updateOrCreate($data, $job);
 
         return redirect($job->url)->with('message', 'app.successfully_updated');
     }

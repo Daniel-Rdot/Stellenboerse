@@ -1,5 +1,5 @@
 <nav class="flex justify-between items-center mb-4">
-    <a href="/"><img class="w-24 logo" src="{{asset('storage/images/logo.png')}}" alt=""/></a>
+    <a href="{{ route('home') }}"><img class="w-24 logo" src="{{asset('storage/images/logo.png')}}" alt=""/></a>
     <ul class="flex space-x-6 mr-6 text-lg">
         @auth
             <li>
