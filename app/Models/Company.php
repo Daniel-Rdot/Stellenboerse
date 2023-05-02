@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+
 
 class Company extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-
         'name',
 
         'email',
@@ -22,33 +23,45 @@ class Company extends Model
         'street',
         'postcode',
         'city',
+
+        'user_id',
     ];
 
     public static function validationRules(): array
     {
         return [
-            'user_id' => 'required',
-
-            'name' => 'required',
+            'name' => 'required|string',
 
             'email' => 'nullable|email',
-            'website' => 'nullable',
-            
-            'street' => 'nullable',
-            'postcode' => 'nullable',
-            'city' => 'nullable',
+            'website' => 'nullable|url',
+
+            'street' => 'nullable|string',
+            'postcode' => 'nullable|string',
+            'city' => 'nullable|string',
+
+            'images' => 'nullable',
+            'images.*' => 'image',
         ];
     }
 
-    // Relationship to User
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    // Relationship to Image
-    public function images(): morphMany
+    public function images(): MorphMany
     {
         return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function jobs(): HasMany
+    {
+        return $this->hasMany(Job::class);
     }
 }

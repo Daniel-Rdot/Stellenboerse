@@ -22,8 +22,6 @@ class CompanyFactory extends Factory
         $user = User::query()->inRandomOrder()->first();
 
         return [
-            'user_id' => $user->id,
-
             'name' => fake()->company(),
 
             'email' => $user->email,
@@ -32,6 +30,8 @@ class CompanyFactory extends Factory
             'street' => fake()->streetName(),
             'postcode' => Address::postcode(),
             'city' => fake()->city(),
+
+            'user_id' => $user->id,
         ];
     }
 }
