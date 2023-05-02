@@ -4,19 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
+use App\Models\Company;
 use App\Models\Job;
+use App\Repositories\JobRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class JobController extends Controller
 {
+    protected JobRepository $jobRepository;
+
+    public function __construct(JobRepository $jobRepository)
+    {
+        $this->jobRepository = $jobRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Company $company = null): View
     {
-        return view('jobs.index');
+        if (isset($company)) {
+            $jobs = $company->jobs();
+        } else {
+            $jobs = Job::query()->paginate();
+        }
+
+        return view('jobs.index', ['jobs' => $jobs]);
     }
 
     /**
@@ -32,17 +47,11 @@ class JobController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // Validation
-        $formFields = $request->validate(Job::validationRules());
+        $data = $request->validate(Job::validationRules());
 
-        // ??? Have to set Job->company_id = Company->id where Company->user_id = User->id of authenticated user
-        $formFields['company_id'] = auth()->user()->company->id;
+        $job = $this->jobRepository->updateOrCreate($data, $request);
 
-        // Persist new Model to Database
-        Job::create($formFields);
-
-        // ??? Zusätzliche Methode / View nötig, oder? Übersicht für alle Anzeigen DIESES users, nicht für ALLE Anzeigen
-        return redirect('jobs.???')->with('message', 'Anzeige erstellt');
+        return redirect(route('jobs.show', ['job' => $job->load(['company.user', 'images'])]))->with('message', trans('app.successfully_created'));
     }
 
     /**
@@ -66,15 +75,11 @@ class JobController extends Controller
      */
     public function update(Request $request, Job $job): RedirectResponse
     {
-        //  ??? Autorisierung des authentifizierten Users zur Bearbeitung des Jobs erfolgt über Policy nehm ich an
+        $data = $request->validate(Job::validationRules());
 
-        // Validation
-        $formFields = $request->validate(Job::validationRules());
+        $this->jobRepository->updateOrCreate($data, $request, $job);
 
-        // Update database entry
-        $job->update($formFields);
-
-        return redirect('jobs.show', ['job' => $job])->with('message', 'Änderungen erfolgreich');
+        return redirect($job->url)->with('message', 'app.successfully_updated');
     }
 
     /**
@@ -82,12 +87,8 @@ class JobController extends Controller
      */
     public function destroy(Job $job): RedirectResponse
     {
-        //  ??? Autorisierung des authentifizierten Users zur Bearbeitung des Jobs erfolgt über Policy nehm ich an
-
-        // Remove from storage
         $job->delete();
 
-        // ??? Zusätzliche Methode / View nötig, oder? Übersicht für alle Anzeigen DIESES users, nicht für ALLE anzeigen
-        return redirect('jobs.???')->with('message', 'Anzeige gelöscht');
+        return redirect('jobs.???')->with('message', trans('app.successfully_deleted'));
     }
 }

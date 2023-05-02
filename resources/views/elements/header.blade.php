@@ -10,7 +10,7 @@
 
             @if(auth()->user()->company()->exists())
                 <li>
-                    <a href="/listings/manage" class="hover:text-laravel">
+                    <a href="{{ route('jobs.index') }}" class="hover:text-laravel">
                         <i class="fa-solid fa-object-group"></i> {{ trans('app.manage_listings') }}
                     </a>
                 </li>
