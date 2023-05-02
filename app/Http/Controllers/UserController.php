@@ -44,14 +44,14 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): View
+    public function store(Request $request)
     {
         $data = $request->validate(User::validationRules());
 
         $user = $this->userRepository->updateOrCreate($data, $request);
 
         // ??? Hier käme Email Verification?
-        return view('users.show', ['user' => $user->load('images')])->with('message', trans('app.successfully_created'));
+        return redirect('users.show', ['user' => $user->load('images')])->with('message', trans('app.successfully_created'));
     }
 
     /**
@@ -73,13 +73,13 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user): View
+    public function update(Request $request, User $user)
     {
         $data = $request->validate(User::validationRules($user));
 
         $this->userRepository->updateOrCreate($data, $request, $user);
 
-        return view('users.show', ['user' => $user])->with('message', trans('app.successfully_updated'));
+        return redirect(route('users.show', ['user' => $user->load('images')]))->with('message', trans('app.successfully_updated'));
     }
 
     /**

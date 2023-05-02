@@ -36,22 +36,28 @@ class User extends Authenticatable
     {
         if (!isset($user)) {
             return [
-                'first_name' => 'nullable',
-                'last_name' => 'nullable',
-                'city' => 'nullable',
+                'first_name' => 'nullable|string|max:50',
+                'last_name' => 'nullable|string|max:50',
+
+                'city' => 'nullable|string|max:50',
                 'email' => 'required|email|unique:users',
+
                 'password' => 'sometimes|confirmed|min:8',
+
                 'images' => 'nullable',
                 'images.*' => 'image',
             ];
         } else {
             return [
-                'first_name' => 'nullable',
-                'last_name' => 'nullable',
-                'city' => 'nullable',
+                'first_name' => 'nullable|string|max:50',
+                'last_name' => 'nullable|string|max:50',
+
+                'city' => 'nullable|string|max:50',
                 'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
+
                 'old_password' => 'nullable',
                 'password' => 'nullable|confirmed|min:8',
+
                 'images' => 'nullable',
                 'images.*' => 'image',
             ];
@@ -78,7 +84,7 @@ class User extends Authenticatable
     ];
 
 
-    public function company(): hasOne
+    public function company(): HasOne
     {
         return $this->hasOne(Company::class);
     }

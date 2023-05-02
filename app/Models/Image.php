@@ -20,10 +20,10 @@ class Image extends Model
     public static function validationRules(): array
     {
         return [
-            'path' => 'required',
+            'path' => 'required|string',
 
-            'imageable_id' => 'required',
-            'imageable_type' => 'required',
+            'imageable_id' => 'required|integer',
+            'imageable_type' => 'required|string',
         ];
     }
 
