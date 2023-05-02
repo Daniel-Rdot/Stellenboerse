@@ -16,6 +16,8 @@ return new class extends Migration {
             $table->string('title');
             $table->longText('description')->nullable();
 
+            $table->string('city')->nullable();
+
             $table->foreignIdFor(\App\Models\Company::class);
 
             $table->timestamps();
