@@ -24,8 +24,8 @@ class CompanyController extends Controller
      */
     public function index(Request $request): View
     {
-        $companies = Company::query()
-            ->paginate();
+        $companies = Company::paginate();
+
         return view('companies.index', ['companies' => $companies]);
     }
 
@@ -34,7 +34,7 @@ class CompanyController extends Controller
      */
     public function create(): View
     {
-        return view('companies.create', ['company' => auth()->user()->company]);
+        return view('companies.create', ['company' => new Company()]);
     }
 
     /**
@@ -44,9 +44,9 @@ class CompanyController extends Controller
     {
         $data = $request->validate(Company::validationRules());
 
-        $company = $this->companyRepository->updateOrCreate($data, $request);
+        $company = $this->companyRepository->updateOrCreate($data);
 
-        return redirect(route('companies.show', ['company' => $company->load(['images', 'user'])]))->with('message', trans('app.successfully_created'));
+        return redirect(route('companies.show', ['company' => $company]))->with('message', trans('app.successfully_created'));
     }
 
     /**
@@ -72,9 +72,9 @@ class CompanyController extends Controller
     {
         $data = $request->validate(Company::validationRules());
 
-        $this->companyRepository->updateOrCreate($data, $request, $company);
+        $this->companyRepository->updateOrCreate($data, $company);
 
-        return redirect(route('companies.show', ['company' => $company->load(['images', 'user'])]))->with('message', trans('app.succesfully_updated'));
+        return redirect(route('companies.edit', ['company' => $company]))->with('message', trans('app.succesfully_updated'));
     }
 
     /**
@@ -84,6 +84,6 @@ class CompanyController extends Controller
     {
         $company->delete();
 
-        return redirect(route('users.edit', ['user' => auth()->user()]))->with('message', trans('app.successfully_deleted'));
+        return redirect(route('home'))->with('message', trans('app.successfully_deleted'));
     }
 }

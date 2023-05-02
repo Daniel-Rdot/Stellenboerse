@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class CompanyRepository
 {
-    public function updateOrCreate(array $data, Request $request, Company $company = null): Company
+    public function updateOrCreate(array $data, Company $company = null): Company
     {
         if (!$company) {
             $company = auth()->user()->company()->create($data);
@@ -17,12 +17,14 @@ class CompanyRepository
         }
 
         // Process images
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') ?? [] as $image) {
-                $company->images()->create([
-                    'path' => Str::after($image->store('public/images'), 'public/')
-                ]);
-            }
+        if (!$company->images()->exists()) {
+            $company->images()->create([
+                'path' => $data['image']->store('images', 'public')
+            ]);
+        } else {
+            $company->images()->update([
+                'path' => $data['image']->store('images', 'public')
+            ]);
         }
 
         return $company;

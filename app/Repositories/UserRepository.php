@@ -19,9 +19,15 @@ class UserRepository
         }
 
         // Process images
-        $user->images()->create([
-            'path' => $data['image']->store('images', 'public')
-        ]);
+        if (!$user->images()->exists()) {
+            $user->images()->create([
+                'path' => $data['image']->store('images', 'public')
+            ]);
+        } else {
+            $user->images()->update([
+                'path' => $data['image']->store('images', 'public')
+            ]);
+        }
 
 
         // Process tags

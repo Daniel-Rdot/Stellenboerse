@@ -79,7 +79,7 @@ class UserController extends Controller
 
         $this->userRepository->updateOrCreate($data, $user);
 
-        return redirect(route('users.show', ['user' => $user]))->with('message', trans('app.successfully_updated'));
+        return redirect(route('users.edit', ['user' => $user]))->with('message', trans('app.successfully_updated'));
     }
 
     /**
