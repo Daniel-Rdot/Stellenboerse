@@ -23,7 +23,7 @@
             </h3>
 
             <div class="text-lg space-y-6">
-                <a href="{{ $user->email }}"
+                <a href="mailto:{{ $user->email }}"
                    class="block bg-laravel text-white mt-6 py-2 px-5 rounded-xl hover:opacity-80"><i
                         class="fa-solid fa-envelope"></i>
                     {{ $user->email }}</a>

@@ -52,4 +52,6 @@ return [
     'list_offer' => 'List a new Job Offering',
     'description' => 'Description',
     'images' => 'Images',
+    'contact_employer' => 'Contact Employer',
+    'visit_website' => 'Visit Website',
 ];
