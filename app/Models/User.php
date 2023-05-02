@@ -44,8 +44,7 @@ class User extends Authenticatable
 
                 'password' => 'sometimes|confirmed|min:8',
 
-                'images' => 'nullable',
-                'images.*' => 'image',
+                'image' => 'nullable|image',
             ];
         } else {
             return [
@@ -58,8 +57,7 @@ class User extends Authenticatable
                 'old_password' => 'nullable',
                 'password' => 'nullable|confirmed|min:8',
 
-                'images' => 'nullable',
-                'images.*' => 'image',
+                'image' => 'nullable|image',
             ];
         }
     }

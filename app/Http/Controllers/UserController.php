@@ -51,7 +51,7 @@ class UserController extends Controller
         $user = $this->userRepository->updateOrCreate($data, $request);
 
         // ??? Hier käme Email Verification?
-        return redirect('users.show', ['user' => $user->load('images')])->with('message', trans('app.successfully_created'));
+        return redirect('users.show', ['user' => $user])->with('message', trans('app.successfully_created'));
     }
 
     /**
@@ -59,7 +59,7 @@ class UserController extends Controller
      */
     public function show(User $user): View
     {
-        return view('users.show', ['user' => $user->load('images')]);
+        return view('users.show', ['user' => $user]);
     }
 
     /**
@@ -77,9 +77,9 @@ class UserController extends Controller
     {
         $data = $request->validate(User::validationRules($user));
 
-        $this->userRepository->updateOrCreate($data, $request, $user);
+        $this->userRepository->updateOrCreate($data, $user);
 
-        return redirect(route('users.show', ['user' => $user->load('images')]))->with('message', trans('app.successfully_updated'));
+        return redirect(route('users.show', ['user' => $user]))->with('message', trans('app.successfully_updated'));
     }
 
     /**

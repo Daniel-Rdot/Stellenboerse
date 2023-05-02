@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 class UserRepository
 {
-    public function updateOrCreate(array $data, Request $request, User $user = null): User
+    public function updateOrCreate(array $data, User $user = null): User
     {
         if (!$user) {
             $user = User::create($data);
@@ -19,17 +19,9 @@ class UserRepository
         }
 
         // Process images
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') ?? [] as $image) {
-                $user->images()->create([
-                    'path' => Str::after($image->store('public/images'), 'public/')
-                ]);
-            }
-        }
-
-//        $user->images()->create([
-//            'path' => $request->file('images')->store()
-//        ]);
+        $user->images()->create([
+            'path' => $data['image']->store('images', 'public')
+        ]);
 
 
         // Process tags
