@@ -11,6 +11,12 @@
 
         <h3 class="text-3xl font-bold mb-2">{{ $job->title }}</h3>
 
+        <h3 class="text-xl my-4">
+            <a href="{{ route('companies.show', $job->company->id) }}">
+                {{ $job->company->name }}
+            </a>
+        </h3>
+
         <div class="text-lg my-4">
             @if (isset($job->company->city))
                 <i class="fa-solid fa-location-dot"></i> {{ $job->company->city }}

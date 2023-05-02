@@ -6,7 +6,7 @@
     <div class="flex">
         <div>
             <h3 class="text-2xl">
-                <a href="/companies/{{ $job->id }}">
+                <a href="/jobs/{{ $job->id }}">
                     {{ $job->title }}
                 </a>
             </h3>
