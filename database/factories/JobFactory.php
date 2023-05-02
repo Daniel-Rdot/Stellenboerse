@@ -17,12 +17,8 @@ class JobFactory extends Factory
      */
     public function definition(): array
     {
-        $company = Company::query()->inRandomOrder()->first();
-
         return [
-            'company_id' => $company->id,
-            'title' => fake()->sentence(),
-            'city' => $company->city,
+            'title' => fake()->sentence(4),
             'description' => fake()->paragraph(5),
         ];
     }

@@ -24,10 +24,10 @@ class CompanyFactory extends Factory
         return [
             'name' => fake()->company(),
 
-            'email' => $user->email,
+            'email' => fake()->companyEmail(),
             'website' => fake()->url(),
 
-            'street' => fake()->streetName(),
+            'street' => fake()->streetAddress(),
             'postcode' => Address::postcode(),
             'city' => fake()->city(),
 
