@@ -39,7 +39,7 @@ class Company extends Model
             'postcode' => 'nullable|string',
             'city' => 'nullable|string',
 
-            'image' => 'nullable|image',
+            'image' => 'nullable|image|dimensions:max_width=180,max_height=180',
         ];
     }
 

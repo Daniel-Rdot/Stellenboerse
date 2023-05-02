@@ -17,15 +17,18 @@ class CompanyRepository
         }
 
         // Process images
-        if (!$company->images()->exists()) {
-            $company->images()->create([
-                'path' => $data['image']->store('images', 'public')
-            ]);
-        } else {
-            $company->images()->update([
-                'path' => $data['image']->store('images', 'public')
-            ]);
+        if (isset($data['image'])) {
+            if (!$company->images()->exists()) {
+                $company->images()->create([
+                    'path' => $data['image']->store('images', 'public')
+                ]);
+            } else {
+                $company->images()->update([
+                    'path' => $data['image']->store('images', 'public')
+                ]);
+            }
         }
+
 
         return $company;
     }

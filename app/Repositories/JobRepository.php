@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class JobRepository
 {
-    public function updateOrCreate(array $data, Request $request, Job $job = null): Job
+    public function updateOrCreate(array $data, Job $job = null): Job
     {
         if (!$job) {
             $job = auth()->user()->company->jobs()->create($data);
@@ -17,13 +17,16 @@ class JobRepository
         }
 
         // Process images
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') ?? [] as $image) {
+        if (!$job->images()->exists()) {
+            foreach ($data['images'] ?? [] as $image) {
                 $job->images()->create([
-                    'path' => Str::after($image->store('public/images'), 'public/')
+                    'path' => $image->store('images', 'public')
                 ]);
             }
+        } else {
+            // Handle removing/replacing multiple images
         }
+
 
         // Process tags
 

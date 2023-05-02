@@ -19,14 +19,16 @@ class UserRepository
         }
 
         // Process images
-        if (!$user->images()->exists()) {
-            $user->images()->create([
-                'path' => $data['image']->store('images', 'public')
-            ]);
-        } else {
-            $user->images()->update([
-                'path' => $data['image']->store('images', 'public')
-            ]);
+        if (isset($data['image'])) {
+            if (!$user->images()->exists()) {
+                $user->images()->create([
+                    'path' => $data['image']->store('images', 'public')
+                ]);
+            } else {
+                $user->images()->update([
+                    'path' => $data['image']->store('images', 'public')
+                ]);
+            }
         }
 
 

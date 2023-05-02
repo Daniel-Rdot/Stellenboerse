@@ -40,7 +40,7 @@ class Job extends Model
             'city' => 'nullable|string|max:50',
 
             'images' => 'nullable',
-            'images.*' => 'image',
+            'images.*' => 'image|dimensions:max_width=180,max_height=180',
         ];
     }
 
