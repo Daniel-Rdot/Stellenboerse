@@ -1,7 +1,7 @@
-@extends('app')
+@extends('layouts.app')
 
 @section('content')
-    <x-back/>
+    {!! Breadcrumbs::render('register', null) !!}
 
     <div class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
         <header class="text-center">

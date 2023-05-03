@@ -1,6 +1,6 @@
-@include('app')
+@include('layouts.app')
 
-<x-back/>
+{!! Breadcrumbs::render('users.edit', $user) !!}
 
 <div class="max-w-2xl mx-auto flex flex-row">
     <div class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg ml-10 mr-10 mb-10 mt-24">

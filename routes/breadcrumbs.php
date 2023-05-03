@@ -31,6 +31,12 @@ Breadcrumbs::for(
     fn(Generator $trail, $category) => $trail->parent('Users')->push($category->email . '/ Edit', route('users.show', $category->id))
 );
 
+// Home > Users > Create
+Breadcrumbs::for(
+    'users.create',
+    fn(Generator $trail, $category) => $trail->parent('Users')->push('Create', route('users.create'))
+);
+
 // Home > Users > Register
 Breadcrumbs::for(
     'register',
@@ -42,6 +48,7 @@ Breadcrumbs::for(
     'login',
     fn(Generator $trail, $category) => $trail->parent('Users')->push('Login', route('login'))
 );
+
 
 // Home > Companies
 Breadcrumbs::for(

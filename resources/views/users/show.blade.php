@@ -1,6 +1,6 @@
-@include('app')
+@include('layouts.app')
 
-<x-back/>
+{!! Breadcrumbs::render('users.show', $user) !!}
 
 <div class="mx-4">
     <div class="flex flex-col items-center justify-center text-center">

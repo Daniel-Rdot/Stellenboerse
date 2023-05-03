@@ -1,13 +1,13 @@
 @include('layouts.app')
 
-<x-back/>
+{!! Breadcrumbs::render('users.create', null) !!}
 
 <div class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
     <header class="text-center">
         <h2 class="text-2xl font-bold uppercase mb-1">
-            {{ trans('app.register') }}
+            {{ trans('app.create_user') }}
         </h2>
-        <p class="mb-4">{{ trans('app.new_acc') }}</p>
+
     </header>
 
     <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">

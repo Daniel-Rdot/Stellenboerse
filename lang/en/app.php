@@ -58,4 +58,5 @@ return [
     'home' => 'Home',
     'slash' => '/',
     'edit' => 'Edit',
+    'create_user' => 'Create Account for a new User',
 ];
