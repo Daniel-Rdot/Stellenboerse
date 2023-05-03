@@ -74,7 +74,7 @@ class CompanyController extends Controller
 
         $this->companyRepository->updateOrCreate($data, $company);
 
-        return redirect(route('companies.edit', ['company' => $company]))->with('message', trans('app.succesfully_updated'));
+        return redirect(route('companies.edit', ['company' => $company]))->with('message', trans('app.successfully_updated'));
     }
 
     /**
