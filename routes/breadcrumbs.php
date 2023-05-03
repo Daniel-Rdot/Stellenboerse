@@ -6,18 +6,13 @@ use Rawilk\Breadcrumbs\Support\Generator;
 // Home
 Breadcrumbs::for('home', fn(Generator $trail) => $trail->push('Home', route('home')));
 
-// Home > About
-Breadcrumbs::for(
-    'about',
-    fn(Generator $trail) => $trail->parent('home')->push('About', route('About'))
-);
+// Users Section
 
 // Home > Users
 Breadcrumbs::for(
     'Users',
     fn(Generator $trail) => $trail->parent('home')->push('Users', route('users.index'))
 );
-
 
 // Home > Users > Show
 Breadcrumbs::for(
@@ -49,11 +44,30 @@ Breadcrumbs::for(
     fn(Generator $trail, $category) => $trail->parent('Users')->push('Login', route('login'))
 );
 
+// Companies Section
 
 // Home > Companies
 Breadcrumbs::for(
     'Companies',
     fn(Generator $trail) => $trail->parent('home')->push('Companies', route('companies.index'))
+);
+
+// Home > Companies > Show
+Breadcrumbs::for(
+    'companies.show',
+    fn(Generator $trail, $category) => $trail->parent('Companies')->push($category->name, route('companies.show', $category->id))
+);
+
+// Home > Companies > Edit
+Breadcrumbs::for(
+    'companies.edit',
+    fn(Generator $trail, $category) => $trail->parent('Companies')->push($category->name . '/ Edit', route('companies.show', $category->id))
+);
+
+// Home > Companies > Create
+Breadcrumbs::for(
+    'companies.create',
+    fn(Generator $trail, $category) => $trail->parent('Companies')->push('Create', route('companies.create'))
 );
 
 
