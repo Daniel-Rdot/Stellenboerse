@@ -55,4 +55,5 @@ return [
     'contact_employer' => 'Contact Employer',
     'visit_website' => 'Visit Website',
     'view_jobs' => 'View Job Offerings',
+    'home' => 'Home',
 ];
