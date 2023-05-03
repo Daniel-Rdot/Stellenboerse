@@ -1,4 +1,4 @@
-@include('app')
+@include('layouts.app')
 
 <x-back/>
 

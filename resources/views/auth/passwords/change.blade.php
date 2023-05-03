@@ -1,4 +1,4 @@
-@include('app')
+@include('layouts.app')
 
 <x-back/>
 
@@ -11,7 +11,7 @@
 
     <form action="{{ route('passwords.change') }}" method="POST">
         @csrf
-        
+
 
         <div class="mb-6">
             <label for="current_password" class="inline-block text-lg mb-2">

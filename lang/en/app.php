@@ -56,4 +56,6 @@ return [
     'visit_website' => 'Visit Website',
     'view_jobs' => 'View Job Offerings',
     'home' => 'Home',
+    'slash' => '/',
+    'edit' => 'Edit',
 ];

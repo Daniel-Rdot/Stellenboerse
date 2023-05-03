@@ -4,6 +4,8 @@ module.exports = {
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",
+        './vendor/wireui/breadcrumbs/src/Components/**/*.php',
+        './vendor/wireui/breadcrumbs/src/views/**/*.blade.php',
     ],
     theme: {
         extend: {
