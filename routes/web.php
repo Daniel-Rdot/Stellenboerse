@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 
 Route::resources([
     'users' => \App\Http\Controllers\UserController::class,

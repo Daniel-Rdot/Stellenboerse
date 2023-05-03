@@ -25,11 +25,16 @@ class JobController extends Controller
      */
     public function index(Request $request): View
     {
+        $user = $request->user();
         $data = $request->query();
 
-        $jobs = Job::query()
-            ->where('company_id', auth()->user()->company->id)
-            ->paginate(20);
+        if ($user?->company?->exists()) {
+            $jobs = Job::query()->where('company_id', $user->company->id)
+                ->paginate(20);
+        } else {
+            $jobs = Job::paginate(20);
+        }
+
 
         // Code für Suchfeld
 //        $jobs = Job::query()

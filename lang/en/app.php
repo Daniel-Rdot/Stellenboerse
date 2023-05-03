@@ -54,4 +54,6 @@ return [
     'images' => 'Images',
     'contact_employer' => 'Contact Employer',
     'visit_website' => 'Visit Website',
+    'welcome' => 'Welcome',
+    'view_jobs' => 'View Job Offerings',
 ];
