@@ -3,15 +3,21 @@
 namespace App\Repositories;
 
 use App\Models\Company;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyRepository
 {
     public function updateOrCreate(array $data, Company $company = null): Company
     {
         if (!$company) {
-            $company = auth()->user()->company()->create($data);
+
+            $company = Company::create($data);
+
+            if (Auth::user()) {
+                $this->setUserRelation($company, Auth::user());
+            }
+
         } else {
             $company->update($data);
         }
@@ -29,7 +35,11 @@ class CompanyRepository
             }
         }
 
-
         return $company;
+    }
+
+    public function setUserRelation(Company $company, User $user)
+    {
+        $user->company()->save($company);
     }
 }

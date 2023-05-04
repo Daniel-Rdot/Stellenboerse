@@ -43,6 +43,12 @@ class Company extends Model
         ];
     }
 
+//    public static function boot()
+//    {
+//        static::creating(function () {
+//            $this->user_id = Auth::user()->id();
+//        });
+//    }
 
     public function user(): BelongsTo
     {
