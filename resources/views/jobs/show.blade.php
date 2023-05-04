@@ -1,6 +1,6 @@
 @include('layouts.app')
 
-<x-back/>
+{!! Breadcrumbs::render('jobs.show', $job) !!}
 
 <div class="mx-4">
     <div class="flex flex-col items-center justify-center text-center">

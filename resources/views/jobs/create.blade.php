@@ -1,6 +1,6 @@
 @include('layouts.app')
 
-<x-back/>
+{!! Breadcrumbs::render('jobs.create', null) !!}
 
 <div class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
     <header class="text-center">
@@ -66,7 +66,7 @@
         <div class="mb-6">
             <label for="images" class="inline-block text-lg mb-2">{{ trans('app.images') }}</label>
             <img class="w-48 mr-6 mb-6" id="image-preview"
-                 src="{{asset('storage/images/no-image.png')}}"
+                 src="{{ asset('storage/images/no-image.png') }}"
                  alt=""
             />
             <input type="file" class="border border-gray-200 rounded p-2 w-full" accept="image/*" name="images[]"

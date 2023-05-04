@@ -71,6 +71,33 @@ Breadcrumbs::for(
 );
 
 
+// Jobs Section
+
+// Home > Jobs
+Breadcrumbs::for(
+    'Jobs',
+    fn(Generator $trail) => $trail->parent('home')->push('Jobs', route('jobs.index'))
+);
+
+// Home > Jobs > Show
+Breadcrumbs::for(
+    'jobs.show',
+    fn(Generator $trail, $category) => $trail->parent('Jobs')->push($category->title, route('jobs.show', $category->id))
+);
+
+// Home > Jobs > Edit
+Breadcrumbs::for(
+    'jobs.edit',
+    fn(Generator $trail, $category) => $trail->parent('Jobs')->push($category->title . '/ Edit', route('jobs.show', $category->id))
+);
+
+// Home > Jobs > Create
+Breadcrumbs::for(
+    'jobs.create',
+    fn(Generator $trail, $category) => $trail->parent('Jobs')->push('Create', route('jobs.create'))
+);
+
+
 // Home > Blog > [Category]
 Breadcrumbs::for(
     'category',
