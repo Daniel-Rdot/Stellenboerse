@@ -31,6 +31,11 @@ class JobRepository
                 ]);
             }
         } else {
+            foreach ($data['images'] ?? [] as $image) {
+                $job->images()->update([
+                    'path' => $image->store('images', 'public')
+                ]);
+            }
             // Handle removing/replacing multiple images
         }
 

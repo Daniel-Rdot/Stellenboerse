@@ -48,7 +48,7 @@ class UserController extends Controller
     {
         $data = $request->validate(User::validationRules());
 
-        $user = $this->userRepository->updateOrCreate($data, $request);
+        $user = $this->userRepository->updateOrCreate($data);
 
         // ??? Hier käme Email Verification?
         return redirect('users.show', ['user' => $user])->with('message', trans('app.successfully_created'));

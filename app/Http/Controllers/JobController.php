@@ -91,7 +91,7 @@ class JobController extends Controller
 
         $this->jobRepository->updateOrCreate($data, $job);
 
-        return redirect($job->url)->with('message', 'app.successfully_updated');
+        return redirect($job->url)->with('message', trans('app.successfully_updated'));
     }
 
     /**
@@ -101,6 +101,6 @@ class JobController extends Controller
     {
         $job->delete();
 
-        return redirect('jobs.???')->with('message', trans('app.successfully_deleted'));
+        return back()->with('message', trans('app.successfully_deleted'));
     }
 }

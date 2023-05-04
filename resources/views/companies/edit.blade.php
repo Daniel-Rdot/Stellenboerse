@@ -108,7 +108,7 @@
             <div class="mb-6">
                 <label for="image" class="inline-block text-lg mb-2">{{ trans('app.logo') }}</label>
                 <img class="w-48 mr-6 mb-6" id="image-preview"
-                     src="{{ $company->images()->first() ? asset('storage/' . $company->images()->first()->path) : asset('storage/images/no-image.png') }}"
+                     src="{{ $company->images()?->first() ? asset('storage/' . $company->images()?->first()?->path) : asset('storage/images/no-image.png') }}"
                      alt=""
                 />
                 <input type="file" class="border border-gray-200 rounded p-2 w-full" accept="image/*"
