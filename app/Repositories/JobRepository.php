@@ -3,8 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Job;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class JobRepository
 {
@@ -12,12 +10,6 @@ class JobRepository
     {
         if (!$job) {
             $job = Job::create($data);
-
-            if (Auth::user()) {
-                if (isset(Auth::user()->company)) {
-                    $this->setCompanyRelation($job, Auth::user());
-                }
-            }
 
         } else {
             $job->update($data);
@@ -43,10 +35,5 @@ class JobRepository
         // Process tags
 
         return $job;
-    }
-
-    public function setCompanyRelation(Job $job, User $user)
-    {
-        $user->company->jobs()->save($job);
     }
 }

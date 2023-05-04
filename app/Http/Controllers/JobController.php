@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreJobRequest;
-use App\Http\Requests\UpdateJobRequest;
-use App\Models\Company;
 use App\Models\Job;
 use App\Repositories\JobRepository;
 use Illuminate\Http\RedirectResponse;
@@ -28,9 +25,10 @@ class JobController extends Controller
         $user = $request->user();
         $data = $request->query();
 
-        if ($user?->company?->exists()) {
-            $jobs = Job::query()->where('company_id', $user->company->id)
-                ->paginate(20);
+        // Manage Listings View (Filter Jobs by Company)
+
+        if (isset($data['manage'])) {
+            $jobs = $user->company->jobs()->paginate(20);
         } else {
             $jobs = Job::paginate(20);
         }

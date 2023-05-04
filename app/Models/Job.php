@@ -24,12 +24,12 @@ class Job extends Model
         'company_id',
     ];
 
-//    public static function boot()
-//    {
-//        static::creating(function (Job $job) {
-//            $job->company_id = \Auth::user()->company->id;
-//        });
-//    }
+    public static function booted()
+    {
+        static::creating(function (Job $job) {
+            $job->company_id = \Auth::user()->company->id;
+        });
+    }
 
     public static function validationRules(): array
     {
