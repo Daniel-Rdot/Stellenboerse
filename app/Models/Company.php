@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Facades\Auth;
 
 
 class Company extends Model
@@ -43,12 +44,12 @@ class Company extends Model
         ];
     }
 
-//    public static function boot()
-//    {
-//        static::creating(function () {
-//            $this->user_id = Auth::user()->id();
-//        });
-//    }
+    public static function booted()
+    {
+        static::creating(function (Company $company) {
+            $company->user_id = Auth::user()->id;
+        });
+    }
 
     public function user(): BelongsTo
     {

@@ -11,12 +11,7 @@ class CompanyRepository
     public function updateOrCreate(array $data, Company $company = null): Company
     {
         if (!$company) {
-
             $company = Company::create($data);
-
-            if (Auth::user()) {
-                $this->setUserRelation($company, Auth::user());
-            }
 
         } else {
             $company->update($data);
@@ -36,10 +31,5 @@ class CompanyRepository
         }
 
         return $company;
-    }
-
-    public function setUserRelation(Company $company, User $user)
-    {
-        $user->company()->save($company);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property mixed $url
@@ -27,7 +28,7 @@ class Job extends Model
     public static function booted()
     {
         static::creating(function (Job $job) {
-            $job->company_id = \Auth::user()->company->id;
+            $job->company_id = Auth::user()->company->id;
         });
     }
 

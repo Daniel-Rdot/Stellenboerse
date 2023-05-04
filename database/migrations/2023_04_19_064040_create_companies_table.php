@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->string('postcode')->nullable();
             $table->string('city')->nullable();
 
-            $table->foreignIdFor(\App\Models\User::class)->nullable();
+            $table->foreignIdFor(\App\Models\User::class);
 
             $table->timestamps();
         });
