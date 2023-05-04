@@ -18,7 +18,7 @@ return new class extends Migration {
 
             $table->string('city')->nullable();
 
-            $table->foreignIdFor(\App\Models\Company::class);
+            $table->foreignIdFor(\App\Models\Company::class)->nullable()->constrained()->cascadeOnDelete();
 
             $table->timestamps();
         });

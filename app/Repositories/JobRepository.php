@@ -3,15 +3,22 @@
 namespace App\Repositories;
 
 use App\Models\Job;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class JobRepository
 {
     public function updateOrCreate(array $data, Job $job = null): Job
     {
         if (!$job) {
-            $job = auth()->user()->company->jobs()->create($data);
+            $job = Job::create($data);
+
+            if (Auth::user()) {
+                if (isset(Auth::user()->company)) {
+                    $this->setCompanyRelation($job, Auth::user());
+                }
+            }
+
         } else {
             $job->update($data);
         }
@@ -33,4 +40,8 @@ class JobRepository
         return $job;
     }
 
+    public function setCompanyRelation(Job $job, User $user)
+    {
+        $user->company->jobs()->save($job);
+    }
 }
