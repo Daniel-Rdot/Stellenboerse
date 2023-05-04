@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -64,5 +65,14 @@ class Job extends Model
     public function getUrlAttribute()
     {
         return route('jobs.show', ['job' => $this]);
+    }
+
+    public function scopeSearch(Builder $query, array $data): void
+    {
+        $search = $data['search'];
+
+        $query->where('title', 'like', '%' . $search . '%')
+            ->orWhere('description', 'like', '%' . $search . '%')
+            ->orWhere('city', 'like', '%' . $search . '%');
     }
 }

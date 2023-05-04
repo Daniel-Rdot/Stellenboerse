@@ -1,4 +1,5 @@
 @include('layouts.app')
+@include('elements.hero')
 
 {!! Breadcrumbs::render('home') !!}
 

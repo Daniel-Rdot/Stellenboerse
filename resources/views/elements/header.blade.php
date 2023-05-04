@@ -8,9 +8,10 @@
             </span>
             </li>
 
-            @if(auth()->user()->company()->exists())
+            @if(auth()->user()?->company()?->exists())
                 <li>
-                    <a href="{{ route('jobs.index') }}" class="hover:text-laravel">
+                    <a href="{{ route('jobs.index', ['manage' => auth()->user()->company]) }}"
+                       class="hover:text-laravel">
                         <i class="fa-solid fa-object-group"></i> {{ trans('app.manage_listings') }}
                     </a>
                 </li>
@@ -32,4 +33,3 @@
         @endauth
     </ul>
 </nav>
-

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Job;
 use App\Repositories\JobRepository;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -23,23 +25,21 @@ class JobController extends Controller
     public function index(Request $request): View
     {
         $user = $request->user();
-        $data = $request->query();
+        $data = $request->validate([
+            'search' => 'string',
+            'manage' => 'string',
+        ]);
 
-        // Manage Listings View (Filter Jobs by Company)
-
+        // Manage Listings View (Filter Jobs by Company) & Search Bar
         if (isset($data['manage'])) {
             $jobs = $user->company->jobs()->paginate(20);
+        } elseif (isset($data['search'])) {
+            $jobs = Job::search($data)->orWhereHas('company', function (Builder $query) use ($data) {
+                $query->where('name', 'LIKE', '%' . $data['search'] . '%');
+            })->paginate(20);
         } else {
             $jobs = Job::paginate(20);
         }
-
-
-        // Code für Suchfeld
-//        $jobs = Job::query()
-//            ->when(isset($data['company_id']), function ($query) use ($data) {
-//                $query->where('company_id', 'LIKE', '%' . $data['company_id'] . '%');
-//            })
-//            ->paginate();
 
         return view('jobs.index', ['jobs' => $jobs]);
     }
