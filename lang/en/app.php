@@ -59,4 +59,8 @@ return [
     'slash' => '/',
     'edit' => 'Edit',
     'create_user' => 'Create Account for a new User',
+    'case' => 'Case',
+    'study' => 'Study',
+    'find_job' => 'Find a new Job',
+    'looking_hire' => 'Looking to hire?',
 ];

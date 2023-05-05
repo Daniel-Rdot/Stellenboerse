@@ -9,7 +9,7 @@
     @vite('resources/js/app.js')
     <script src="{{ asset('js/updatePreview.js') }} "></script>
 
-    <title>Stellenbörse</title>
+    <title>Case Study</title>
 </head>
 <body class="mb-48">
 @include('elements.header')

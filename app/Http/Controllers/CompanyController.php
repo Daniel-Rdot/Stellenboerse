@@ -32,7 +32,11 @@ class CompanyController extends Controller
      */
     public function create(): View
     {
-        return view('companies.create', ['company' => new Company()]);
+        if (\request()->user()->cannot('create')) {
+            abort(403);
+        } else {
+            return view('companies.create', ['company' => new Company()]);
+        }
     }
 
     /**
@@ -40,11 +44,15 @@ class CompanyController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $data = $request->validate(Company::validationRules());
+        if ($request->user()->cannot('create')) {
+            abort(403);
+        } else {
+            $data = $request->validate(Company::validationRules());
 
-        $company = $this->companyRepository->updateOrCreate($data);
+            $company = $this->companyRepository->updateOrCreate($data);
 
-        return redirect(route('companies.show', ['company' => $company]))->with('message', trans('app.successfully_created'));
+            return redirect(route('companies.show', ['company' => $company]))->with('message', trans('app.successfully_created'));
+        }
     }
 
     /**
@@ -60,7 +68,11 @@ class CompanyController extends Controller
      */
     public function edit(Company $company): View
     {
-        return view('companies.edit', ['company' => $company]);
+        if (\request()->user()->cannot('update', $company)) {
+            abort(403);
+        } else {
+            return view('companies.edit', ['company' => $company]);
+        }
     }
 
     /**
@@ -68,11 +80,15 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company): RedirectResponse
     {
-        $data = $request->validate(Company::validationRules());
+        if ($request->user()->cannot('update', $company)) {
+            abort(403);
+        } else {
+            $data = $request->validate(Company::validationRules());
 
-        $this->companyRepository->updateOrCreate($data, $company);
+            $this->companyRepository->updateOrCreate($data, $company);
 
-        return redirect(route('companies.edit', ['company' => $company]))->with('message', trans('app.successfully_updated'));
+            return redirect(route('companies.edit', ['company' => $company]))->with('message', trans('app.successfully_updated'));
+        }
     }
 
     /**
@@ -80,8 +96,13 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company): RedirectResponse
     {
-        $company->delete();
+        if (\request()->user()->cannot('delete', $company)) {
+            abort(403);
+        } else {
 
-        return redirect(route('home'))->with('message', trans('app.successfully_deleted'));
+            $company->delete();
+
+            return redirect(route('home'))->with('message', trans('app.successfully_deleted'));
+        }
     }
 }

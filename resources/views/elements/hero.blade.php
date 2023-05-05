@@ -6,16 +6,16 @@
 
     <div class="z-10">
         <h1 class="text-6xl font-bold uppercase text-white">
-            Job<span class="text-black">Börse</span>
+            {{ trans('app.case') }}<span class="text-black">{{ trans('app.study') }}</span>
         </h1>
         <p class="text-2xl text-gray-200 font-bold my-4">
-            Finde deinen neuen Job - oder Mitarbeiter
+            {{ trans('app.find_job') }}
         </p>
         @guest
             <div>
-                <a href="register/company"
+                <a href="{{ route('companies.create') }}"
                    class="inline-block border-2 border-white text-white py-2 px-4 rounded-xl uppercase mt-2 hover:text-black hover:border-black">
-                    Registriere dein Unternehmen hier, um eine Anzeige aufzugeben
+                    {{ trans('app.looking_hire') }} {{ trans('app.register_company') }}
                 </a>
             </div>
         @endguest
