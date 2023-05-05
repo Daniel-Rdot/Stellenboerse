@@ -44,6 +44,7 @@ class Company extends Model
         ];
     }
 
+    // Seeder sagt: Attempt to read property "id" on null
     public static function booted()
     {
         static::creating(function (Company $company) {

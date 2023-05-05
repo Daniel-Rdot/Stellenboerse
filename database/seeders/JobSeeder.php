@@ -14,9 +14,6 @@ class JobSeeder extends Seeder
      */
     public function run(): void
     {
-        Job::factory(4)
-            ->has(Image::factory(1), 'images')
-            ->create();
-
+        //
     }
 }

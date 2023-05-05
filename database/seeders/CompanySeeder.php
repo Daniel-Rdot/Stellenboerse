@@ -16,9 +16,6 @@ class CompanySeeder extends Seeder
      */
     public function run(): void
     {
-        Company::factory(5)
-            ->has(Image::factory(1), 'images')
-            ->has(Job::factory(2), 'jobs')
-            ->create();
+        //
     }
 }

@@ -26,6 +26,7 @@ class Job extends Model
         'company_id',
     ];
 
+    // Seeder sagt: Attempt to read property "id" on null
     public static function booted()
     {
         static::creating(function (Job $job) {
