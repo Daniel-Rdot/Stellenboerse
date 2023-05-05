@@ -15,19 +15,19 @@
         alt=""/>
     <div>
         <h3 class="text-2xl">
-            <a href="/jobs/{{ $job->id }}">
+            <a href="{{ route('jobs.show', $job) }}">
                 {{ $job->title }}
             </a>
         </h3>
 
 
         <div class="text-xl font-bold mb-4">
-            <a href="/companies/{{ $job->company?->id }}">
+            <a href="{{ route('companies.show', $job->company) }}">
                 {{ $job->company?->name }}
             </a>
         </div>
 
-        {{--        <x-job-tags :tagsCsv="$job->tags"/>--}}
+        <x-job-tags :tags="$job->tags"/>
 
         @if ($job->city || $job->company?->city || $job->company?->user?->city)
             <div class="text-lg mt-4">
@@ -35,12 +35,13 @@
             </div>
         @endif
     </div>
+    
     @can('update', $job)
         <table class="table-auto rounded-sm">
             <tbody>
             <tr>
                 <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                    <a href="/jobs/{{ $job->id }}/edit"
+                    <a href="{{ route('jobs.edit', $job) }}"
                        class="text-blue-400 px-6 py-2 rounded-xl"><i class="fa-solid fa-pen-to-square"></i>
                         {{ trans('app.edit') }}
                     </a>

@@ -23,6 +23,8 @@
             </a>
         </h3>
 
+        <x-job-tags :tags="$job->tags"/>
+
         <div class="text-lg my-4">
             @if (isset($job->company?->city))
                 <i class="fa-solid fa-location-dot"></i> {{ $job->company?->city }}
