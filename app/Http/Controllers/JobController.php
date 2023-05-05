@@ -77,7 +77,11 @@ class JobController extends Controller
      */
     public function edit(Job $job): View
     {
-        return view('jobs.edit', ['job' => $job]);
+        if (\request()->user()->cannot('update', $job)) {
+            abort(403);
+        } else {
+            return view('jobs.edit', ['job' => $job]);
+        }
     }
 
     /**
@@ -85,11 +89,15 @@ class JobController extends Controller
      */
     public function update(Request $request, Job $job): RedirectResponse
     {
-        $data = $request->validate(Job::validationRules());
+        if ($request->user()->cannot('update', $job)) {
+            abort(403);
+        } else {
+            $data = $request->validate(Job::validationRules());
 
-        $this->jobRepository->updateOrCreate($data, $job);
+            $this->jobRepository->updateOrCreate($data, $job);
 
-        return redirect($job->url)->with('message', trans('app.successfully_updated'));
+            return redirect($job->url)->with('message', trans('app.successfully_updated'));
+        }
     }
 
     /**
@@ -97,8 +105,12 @@ class JobController extends Controller
      */
     public function destroy(Job $job): RedirectResponse
     {
-        $job->delete();
+        if (\request()->user()->cannot('update', $job)) {
+            abort(403);
+        } else {
+            $job->delete();
 
-        return back()->with('message', trans('app.successfully_deleted'));
+            return back()->with('message', trans('app.successfully_deleted'));
+        }
     }
 }
