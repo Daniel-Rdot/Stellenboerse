@@ -29,7 +29,7 @@ class CompanyPolicy
      */
     public function create(User $user): bool
     {
-        return (!$user->company);
+        return (!isset($user->company));
     }
 
     /**

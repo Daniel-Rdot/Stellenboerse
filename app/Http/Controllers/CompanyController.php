@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Repositories\CompanyRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class CompanyController extends Controller
@@ -32,7 +33,7 @@ class CompanyController extends Controller
      */
     public function create(): View
     {
-        if (\request()->user()->cannot('create')) {
+        if (Gate::forUser(\request()->user())->denies('create', Company::class)) {
             abort(403);
         } else {
             return view('companies.create', ['company' => new Company()]);
@@ -44,7 +45,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        if ($request->user()->cannot('create')) {
+        if (Gate::forUser(\request()->user())->denies('create', Company::class)) {
             abort(403);
         } else {
             $data = $request->validate(Company::validationRules());
