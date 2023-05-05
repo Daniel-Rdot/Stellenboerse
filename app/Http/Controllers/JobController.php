@@ -110,7 +110,7 @@ class JobController extends Controller
         } else {
             $job->delete();
 
-            return back()->with('message', trans('app.successfully_deleted'));
+            return redirect(route('jobs.index', ['manage' => \request()->user()->company]))->with('message', trans('app.successfully_deleted'));
         }
     }
 }

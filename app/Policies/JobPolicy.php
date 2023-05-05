@@ -29,7 +29,7 @@ class JobPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return (isset($user->company));
     }
 
     /**

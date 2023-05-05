@@ -20,6 +20,7 @@
             </a>
         </h3>
 
+
         <div class="text-xl font-bold mb-4">
             <a href="/companies/{{ $job->company?->id }}">
                 {{ $job->company?->name }}
@@ -34,5 +35,30 @@
             </div>
         @endif
     </div>
+    @can('update', $job)
+        <table class="table-auto rounded-sm">
+            <tbody>
+            <tr>
+                <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
+                    <a href="/jobs/{{ $job->id }}/edit"
+                       class="text-blue-400 px-6 py-2 rounded-xl"><i class="fa-solid fa-pen-to-square"></i>
+                        {{ trans('app.edit') }}
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td class="px-4 py-8 border-t border-b border-gray-300 text-lg-red">
+                    <form action="{{ route('jobs.destroy', $job) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="px-6 py-2 rounded-xl">
+                            <i class="fa-solid fa-trash"></i>{{ trans('app.delete') }}
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    @endcan
 </div>
 

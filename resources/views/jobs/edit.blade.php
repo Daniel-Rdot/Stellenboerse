@@ -86,5 +86,13 @@
             </button>
         </div>
     </form>
+    <div class="mb-6">
+        <form action="{{ route('jobs.destroy', $job) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button class="text-red-500"><i class="fa-solid fa-trash"></i>{{ trans('app.delete_job') }}
+            </button>
+        </form>
+    </div>
 </div>
 

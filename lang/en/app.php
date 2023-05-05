@@ -63,4 +63,6 @@ return [
     'study' => 'Study',
     'find_job' => 'Find a new Job',
     'looking_hire' => 'Looking to hire?',
+    'delete' => 'Delete',
+    'delete_job' => 'Delete Job',
 ];
