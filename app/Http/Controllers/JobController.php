@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
 use App\Models\Job;
 use App\Repositories\JobRepository;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,15 +27,25 @@ class JobController extends Controller
         $data = $request->validate([
             'search' => 'string',
             'manage' => 'string',
+            'tag' => 'string',
         ]);
 
         // Manage Listings View (Filter Jobs by Company) & Search Bar
         if (isset($data['manage'])) {
             $jobs = $user->company->jobs()->paginate(20);
+
         } elseif (isset($data['search'])) {
             $jobs = Job::search($data)->orWhereHas('company', function (Builder $query) use ($data) {
                 $query->where('name', 'LIKE', '%' . $data['search'] . '%');
             })->paginate(20);
+
+        } elseif (isset($data['tag'])) {
+            $jobs = Job::where(function (Builder $query) use ($data) {
+                $query->whereHas('tags', function (Builder $subquery) use ($data) {
+                    $subquery->where('tag', 'LIKE', '%' . $data['tag'] . '%');
+                });
+            })->paginate(20);
+
         } else {
             $jobs = Job::paginate(20);
         }
