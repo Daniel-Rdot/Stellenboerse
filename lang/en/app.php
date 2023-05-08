@@ -65,4 +65,5 @@ return [
     'looking_hire' => 'Looking to hire?',
     'delete' => 'Delete',
     'delete_job' => 'Delete Job',
+    'look_for_jobs' => 'Look for Jobs...',
 ];

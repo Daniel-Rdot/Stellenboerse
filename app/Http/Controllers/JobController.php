@@ -30,7 +30,7 @@ class JobController extends Controller
             'tag' => 'string',
         ]);
 
-        // Manage Listings View (Filter Jobs by Company) & Search Bar
+        
         if (isset($data['manage'])) {
             $jobs = $user->company->jobs()->paginate(20);
 
