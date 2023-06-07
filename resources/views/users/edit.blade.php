@@ -2,10 +2,9 @@
 
 {!! Breadcrumbs::render('users.edit', $user) !!}
 
-
 <div class="flex flex-row container mx-auto">
     <div class="flex flex-row mx-auto">
-        <div class="bg-gray-50 border border-gray-200 p-10 rounded ml-10 mr-10 mb-10 mt-24">
+        <div class="flex flex-col bg-gray-50 border border-gray-200 p-10 rounded ml-10 mr-10 mb-10 mt-24">
             <header class="text-center">
                 <h2 class="text-2xl font-bold uppercase mb-4">
                     {{ trans('app.acc_details') }}
@@ -119,19 +118,22 @@
             </div>
         </div>
         @if ($user->company()->exists())
-            <div class="flex flex-col">
-                <div class="flex flex-col bg-gray-50 border border-gray-200 p-10 rounded mx-10 mb-10 mt-24">
+            <div class="flex flex-col mx-auto">
+                <div class="flex flex-col bg-gray-50 border border-gray-200 p-10 rounded ml-10 mr-10 mb-10 mt-24">
                     <header class="text-center">
                         <h2 class="text-2xl font-bold uppercase mb-4">
                             {{ trans('app.your_company') }}
                         </h2>
                     </header>
 
-                    <a href="{{ route('companies.edit', $user->company) }}">
+                    <a class="underline" href="{{ route('companies.edit', $user->company) }}">
                         {{ $user->company->name }}
                     </a>
+
+
                 </div>
-                @endif
             </div>
+        @endif
     </div>
+
 </div>
