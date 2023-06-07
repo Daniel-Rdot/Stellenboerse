@@ -45,10 +45,15 @@ class Company extends Model
     }
 
     // Seeder sagt: Attempt to read property "id" on null
-    public static function booted()
+    public static function boot()
     {
+        parent::boot();
         static::creating(function (Company $company) {
-            $company->user_id = Auth::user()->id;
+            if ($company->user()->exists()) {
+                $company->user_id = $company->user->id;
+            } else {
+                $company->user_id = Auth::user()->id;
+            }
         });
     }
 

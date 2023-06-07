@@ -27,10 +27,15 @@ class Job extends Model
     ];
 
     // Seeder sagt: Attempt to read property "id" on null
-    public static function booted()
+    public static function boot()
     {
+        parent::boot();
         static::creating(function (Job $job) {
-            $job->company_id = Auth::user()->company->id;
+            if ($job->company()->exists()) {
+                $job->company_id = $job->company->id;
+            } else {
+                $job->company_id = Auth::user()->company->id;
+            }
         });
     }
 
