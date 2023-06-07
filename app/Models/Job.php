@@ -47,6 +47,26 @@ class Job extends Model
         ];
     }
 
+    public static function indexValidationRules(): array
+    {
+        return [
+            'search' => 'string',
+            'manage' => 'string',
+            'tag' => 'string',
+        ];
+    }
+
+    public function scopeSearch(Builder $query, array $data): void
+    {
+        $query->where(function ($query) use ($data) {
+            $query->where('title', 'like', '%' . ($search = $data['search']) . '%')
+                ->orWhere('description', 'like', '%' . $search . '%')
+                ->orWhere('city', 'like', '%' . $search . '%')
+                ->orWhereHas('company', function (Builder $query) use ($search) {
+                    $query->where('name', 'LIKE', '%' . $search . '%');
+                });
+        });
+    }
 
     public function company(): BelongsTo
     {
@@ -66,14 +86,5 @@ class Job extends Model
     public function getUrlAttribute()
     {
         return route('jobs.show', ['job' => $this]);
-    }
-
-    public function scopeSearch(Builder $query, array $data): void
-    {
-        $search = $data['search'];
-
-        $query->where('title', 'like', '%' . $search . '%')
-            ->orWhere('description', 'like', '%' . $search . '%')
-            ->orWhere('city', 'like', '%' . $search . '%');
     }
 }

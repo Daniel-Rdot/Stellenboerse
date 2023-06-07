@@ -23,32 +23,9 @@ class JobController extends Controller
      */
     public function index(Request $request): View
     {
-        $user = $request->user();
-        $data = $request->validate([
-            'search' => 'string',
-            'manage' => 'string',
-            'tag' => 'string',
-        ]);
+        $data = $request->validate(Job::indexValidationRules());
 
-        
-        if (isset($data['manage'])) {
-            $jobs = $user->company->jobs()->paginate(20);
-
-        } elseif (isset($data['search'])) {
-            $jobs = Job::search($data)->orWhereHas('company', function (Builder $query) use ($data) {
-                $query->where('name', 'LIKE', '%' . $data['search'] . '%');
-            })->paginate(20);
-
-        } elseif (isset($data['tag'])) {
-            $jobs = Job::where(function (Builder $query) use ($data) {
-                $query->whereHas('tags', function (Builder $subquery) use ($data) {
-                    $subquery->where('tag', 'LIKE', '%' . $data['tag'] . '%');
-                });
-            })->paginate(20);
-
-        } else {
-            $jobs = Job::paginate(20);
-        }
+        $jobs = $this->jobRepository->jobFilter($data);
 
         return view('jobs.index', ['jobs' => $jobs]);
     }
@@ -86,11 +63,7 @@ class JobController extends Controller
      */
     public function edit(Job $job): View
     {
-        if (\request()->user()->cannot('update', $job)) {
-            abort(403);
-        } else {
-            return view('jobs.edit', ['job' => $job]);
-        }
+        return view('jobs.edit', ['job' => $job]);
     }
 
     /**
@@ -98,15 +71,11 @@ class JobController extends Controller
      */
     public function update(Request $request, Job $job): RedirectResponse
     {
-        if ($request->user()->cannot('update', $job)) {
-            abort(403);
-        } else {
-            $data = $request->validate(Job::validationRules());
+        $data = $request->validate(Job::validationRules());
 
-            $this->jobRepository->updateOrCreate($data, $job);
+        $this->jobRepository->updateOrCreate($data, $job);
 
-            return redirect($job->url)->with('message', trans('app.successfully_updated'));
-        }
+        return redirect($job->url)->with('message', trans('app.successfully_updated'));
     }
 
     /**
@@ -114,12 +83,8 @@ class JobController extends Controller
      */
     public function destroy(Job $job): RedirectResponse
     {
-        if (\request()->user()->cannot('update', $job)) {
-            abort(403);
-        } else {
-            $job->delete();
+        $status = $job->delete();
 
-            return redirect(route('jobs.index', ['manage' => \request()->user()->company]))->with('message', trans('app.successfully_deleted'));
-        }
+        return redirect(route('jobs.index', ['manage' => \request()->user()->company]))->with('message', trans('app.successfully_deleted'));
     }
 }
