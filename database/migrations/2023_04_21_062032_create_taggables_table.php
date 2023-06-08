@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('taggables', function (Blueprint $table) {
-            $table->id('tag_id');
+            $table->foreignIdFor(\App\Models\Tag::class);
 
             $table->morphs('taggable');
 
